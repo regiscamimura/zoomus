@@ -25,7 +25,7 @@ class ZoomClientTestCase(unittest.TestCase):
                 "api_key": "KEY",
                 "api_secret": "SECRET",
                 "data_type": "json",
-                "token": util.generate_jwt("KEY", "SECRET"),
+                "token": util.generate_access_token("KEY", "SECRET"),
                 "version": util.API_VERSION_2,
                 "base_uri": API_BASE_URIS[util.API_VERSION_2],
             },
@@ -212,12 +212,14 @@ class ZoomClientTestCase(unittest.TestCase):
         with ZoomClient("KEY", "SECRET") as client:
             self.assertIsInstance(client, ZoomClient)
 
-    @mock.patch("zoomus.client.util.generate_jwt")
-    def test_refresh_token_replaces_config_token_with_new_jwt(self, mock_jwt):
+    @mock.patch("zoomus.client.util.generate_access_token")
+    def test_refresh_token_replaces_config_token_with_new_access_token(
+        self, mock_access_token
+    ):
         client = ZoomClient("KEY", "SECRET")
         client.refresh_token()
-        mock_jwt.assert_called_with("KEY", "SECRET")
-        self.assertEqual(client.config["token"], (mock_jwt.return_value,))
+        mock_access_token.assert_called_with("KEY", "SECRET")
+        self.assertEqual(client.config["token"], (mock_access_token.return_value,))
 
 
 if __name__ == "__main__":

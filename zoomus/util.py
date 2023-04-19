@@ -8,7 +8,6 @@ import contextlib
 import json
 import requests
 import time
-import jwt
 import base64
 
 API_VERSION_1 = 1
@@ -260,8 +259,10 @@ def date_to_str(d):
     return d.strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-def generate_jwt(key, secret, account):
-    base64_auth_string = base64.b64encode(f"{key}:{secret}".encode("ascii")).decode("ascii")
+def generate_access_token(key, secret, account):
+    base64_auth_string = base64.b64encode(f"{key}:{secret}".encode("ascii")).decode(
+        "ascii"
+    )
     # Define the endpoint and payload
     url = "https://zoom.us/oauth/token"
     payload = {
@@ -275,7 +276,7 @@ def generate_jwt(key, secret, account):
 
     # Make the request
     response = requests.post(url, data=payload, headers=headers)
-    token = response.json().get('access_token')
+    token = response.json().get("access_token")
     return token
 
 
