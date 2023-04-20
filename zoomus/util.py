@@ -259,15 +259,15 @@ def date_to_str(d):
     return d.strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-def generate_access_token(key, secret, account):
-    base64_auth_string = base64.b64encode(f"{key}:{secret}".encode("ascii")).decode(
+def generate_access_token(account_id, client_id, client_secret):
+    base64_auth_string = base64.b64encode(f"{client_id}:{client_secret}".encode("ascii")).decode(
         "ascii"
     )
     # Define the endpoint and payload
     url = "https://zoom.us/oauth/token"
     payload = {
         "grant_type": "account_credentials",
-        "account_id": account,
+        "account_id": account_id,
     }
     # Define the headers
     headers = {
