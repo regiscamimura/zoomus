@@ -18,8 +18,10 @@ class GetDailyReportV1TestCase(unittest.TestCase):
         self.component = components.report.ReportComponent(
             base_uri="http://foo.com",
             config={
-                "api_key": "KEY",
-                "api_secret": "SECRET",
+                "account_id": "KEY",
+                "client_id": "CLIENT_ID",
+                "client_secret": "CLIENT_SECRET",
+
                 "version": util.API_VERSION_1,
             },
         )
@@ -29,7 +31,7 @@ class GetDailyReportV1TestCase(unittest.TestCase):
         responses.add(
             responses.POST,
             "http://foo.com/report/getdailyreport?month=01&year=2020"
-            "&api_key=KEY&api_secret=SECRET",
+            "&account_id=KEY&client_id=SECRET",
         )
 
         self.component.get_daily_report(month="01", year="2020")
@@ -50,7 +52,7 @@ class GetDailyReportV1TestCase(unittest.TestCase):
 class GetDailyReportV2TestCase(unittest.TestCase):
     def setUp(self):
         self.component = components.report.ReportComponentV2(
-            base_uri="http://foo.com", config={"api_key": "KEY", "api_secret": "SECRET"}
+            base_uri="http://foo.com", config={"account_id": "KEY", "client_id": "SECRET"}
         )
 
     @responses.activate

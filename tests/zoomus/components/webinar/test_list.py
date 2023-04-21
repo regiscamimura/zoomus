@@ -18,8 +18,10 @@ class ListV1TestCase(unittest.TestCase):
         self.component = components.webinar.WebinarComponent(
             base_uri="http://foo.com",
             config={
-                "api_key": "KEY",
-                "api_secret": "SECRET",
+                "account_id": "KEY",
+                "client_id": "CLIENT_ID",
+                "client_secret": "CLIENT_SECRET",
+
                 "version": util.API_VERSION_1,
             },
         )
@@ -28,7 +30,7 @@ class ListV1TestCase(unittest.TestCase):
     def test_can_list(self):
         responses.add(
             responses.POST,
-            "http://foo.com/webinar/list?host_id=ID&api_key=KEY&api_secret=SECRET",
+            "http://foo.com/webinar/list?host_id=ID&account_id=KEY&client_id=SECRET",
         )
         self.component.list(host_id="ID")
 
@@ -41,7 +43,7 @@ class ListV1TestCase(unittest.TestCase):
         start_time = datetime.datetime(1969, 1, 1, 1, 1)
         responses.add(
             responses.POST,
-            "http://foo.com/webinar/list?host_id=ID&topic=TOPIC&type=TYPE&api_key=KEY&api_secret=SECRET"
+            "http://foo.com/webinar/list?host_id=ID&topic=TOPIC&type=TYPE&account_id=KEY&client_id=SECRET"
             "&start_time=1969-01-01T01%3A01%3A00Z",
         )
         self.component.list(
@@ -54,8 +56,10 @@ class ListV2TestCase(unittest.TestCase):
         self.component = components.webinar.WebinarComponentV2(
             base_uri="http://foo.com",
             config={
-                "api_key": "KEY",
-                "api_secret": "SECRET",
+                "account_id": "KEY",
+                "client_id": "CLIENT_ID",
+                "client_secret": "CLIENT_SECRET",
+
                 "version": util.API_VERSION_2,
             },
         )

@@ -17,8 +17,10 @@ class CreateV1TestCase(unittest.TestCase):
         self.component = components.user.UserComponent(
             base_uri="http://foo.com",
             config={
-                "api_key": "KEY",
-                "api_secret": "SECRET",
+                "account_id": "KEY",
+                "client_id": "CLIENT_ID",
+                "client_secret": "CLIENT_SECRET",
+
                 "version": util.API_VERSION_1,
             },
         )
@@ -34,8 +36,10 @@ class CreateV2TestCase(unittest.TestCase):
         self.component = components.user.UserComponentV2(
             base_uri="http://foo.com",
             config={
-                "api_key": "KEY",
-                "api_secret": "SECRET",
+                "account_id": "KEY",
+                "client_id": "CLIENT_ID",
+                "client_secret": "CLIENT_SECRET",
+
                 "version": util.API_VERSION_2,
             },
         )

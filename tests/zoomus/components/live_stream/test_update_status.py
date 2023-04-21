@@ -9,8 +9,10 @@ class UpdateV2TestCase(unittest.TestCase):
         self.component = components.live_stream.LiveStreamComponentV2(
             base_uri="http://foo.com",
             config={
-                "api_key": "KEY",
-                "api_secret": "SECRET",
+                "account_id": "KEY",
+                "client_id": "CLIENT_ID",
+                "client_secret": "CLIENT_SECRET",
+
                 "version": util.API_VERSION_2,
             },
         )

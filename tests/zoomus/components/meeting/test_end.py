@@ -16,8 +16,10 @@ class EndV1TestCase(unittest.TestCase):
         self.component = components.meeting.MeetingComponent(
             base_uri="http://foo.com",
             config={
-                "api_key": "KEY",
-                "api_secret": "SECRET",
+                "account_id": "KEY",
+                "client_id": "CLIENT_ID",
+                "client_secret": "CLIENT_SECRET",
+
                 "version": util.API_VERSION_1,
             },
         )
@@ -26,7 +28,7 @@ class EndV1TestCase(unittest.TestCase):
     def test_can_end(self):
         responses.add(
             responses.POST,
-            "http://foo.com/meeting/end?id=ID&host_id=ID&api_key=KEY&api_secret=SECRET",
+            "http://foo.com/meeting/end?id=ID&host_id=ID&account_id=KEY&client_id=SECRET",
         )
         self.component.end(id="ID", host_id="ID")
 

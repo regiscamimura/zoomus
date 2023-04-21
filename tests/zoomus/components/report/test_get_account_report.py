@@ -18,8 +18,10 @@ class GetAccountReportV1TestCase(unittest.TestCase):
         self.component = components.report.ReportComponent(
             base_uri="http://foo.com",
             config={
-                "api_key": "KEY",
-                "api_secret": "SECRET",
+                "account_id": "KEY",
+                "client_id": "CLIENT_ID",
+                "client_secret": "CLIENT_SECRET",
+
                 "version": util.API_VERSION_1,
             },
         )
@@ -31,7 +33,7 @@ class GetAccountReportV1TestCase(unittest.TestCase):
         responses.add(
             responses.POST,
             "http://foo.com/report/getaccountreport?from=1969-01-01T01%3A01%3A00Z&to=2020-01-01T01%3A01%3A00Z"
-            "&api_key=KEY&api_secret=SECRET",
+            "&account_id=KEY&client_id=SECRET",
         )
         self.component.get_account_report(start_time=start_time, end_time=end_time)
 
@@ -49,8 +51,10 @@ class GetAccountReportV2TestCase(unittest.TestCase):
         self.component = components.report.ReportComponentV2(
             base_uri="http://foo.com",
             config={
-                "api_key": "KEY",
-                "api_secret": "SECRET",
+                "account_id": "KEY",
+                "client_id": "CLIENT_ID",
+                "client_secret": "CLIENT_SECRET",
+
                 "version": util.API_VERSION_2,
             },
         )

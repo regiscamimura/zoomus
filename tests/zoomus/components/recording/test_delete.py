@@ -17,8 +17,10 @@ class DeleteV1TestCase(unittest.TestCase):
         self.component = components.recording.RecordingComponent(
             base_uri="http://foo.com",
             config={
-                "api_key": "KEY",
-                "api_secret": "SECRET",
+                "account_id": "KEY",
+                "client_id": "CLIENT_ID",
+                "client_secret": "CLIENT_SECRET",
+
                 "version": util.API_VERSION_1,
             },
         )
@@ -27,7 +29,7 @@ class DeleteV1TestCase(unittest.TestCase):
     def test_can_delete(self):
         responses.add(
             responses.POST,
-            "http://foo.com/recording/delete?meeting_id=ID&api_key=KEY&api_secret=SECRET",
+            "http://foo.com/recording/delete?meeting_id=ID&account_id=KEY&client_id=SECRET",
         )
         self.component.delete(meeting_id="ID")
 
@@ -41,8 +43,10 @@ class DeleteV2TestCase(unittest.TestCase):
         self.component = components.recording.RecordingComponentV2(
             base_uri="http://foo.com",
             config={
-                "api_key": "KEY",
-                "api_secret": "SECRET",
+                "account_id": "KEY",
+                "client_id": "CLIENT_ID",
+                "client_secret": "CLIENT_SECRET",
+
                 "version": util.API_VERSION_2,
             },
         )
@@ -64,8 +68,10 @@ class DeleteSingleRecordingV2TestCase(unittest.TestCase):
         self.component = components.recording.RecordingComponentV2(
             base_uri="http://foo.com",
             config={
-                "api_key": "KEY",
-                "api_secret": "SECRET",
+                "account_id": "KEY",
+                "client_id": "CLIENT_ID",
+                "client_secret": "CLIENT_SECRET",
+
                 "version": util.API_VERSION_2,
             },
         )

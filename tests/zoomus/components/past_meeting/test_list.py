@@ -15,7 +15,7 @@ def suite():
 class ListV2TestCase(unittest.TestCase):
     def setUp(self):
         self.component = components.past_meeting.PastMeetingComponentV2(
-            base_uri="http://foo.com", config={"api_key": "KEY", "api_secret": "SECRET"}
+            base_uri="http://foo.com", config={"account_id": "KEY", "client_id": "SECRET"}
         )
 
     @responses.activate

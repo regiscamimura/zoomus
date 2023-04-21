@@ -101,32 +101,32 @@ class ZoomClient(util.ApiClient):
     def refresh_token(self):
         self.config["token"] = (
             util.generate_access_token(
-                self.config["api_key"],
-                self.config["api_secret"],
-                self.config["api_account"],
+                self.config["account_id"],
+                self.config["client_id"],
+                self.config["client_secret"],
             ),
         )
 
     @property
-    def api_key(self):
-        """The Zoom.us api_key"""
-        return self.config.get("api_key")
+    def account_id(self):
+        """The Zoom.us account_id"""
+        return self.config.get("account_id")
 
-    @api_key.setter
-    def api_key(self, value):
-        """Set the api_key"""
-        self.config["api_key"] = value
+    @account_id.setter
+    def account_id(self, value):
+        """Set the account_id"""
+        self.config["account_id"] = value
         self.refresh_token()
 
     @property
-    def api_secret(self):
-        """The Zoom.us api_secret"""
-        return self.config.get("api_secret")
+    def client_id(self):
+        """The Zoom.us client_id"""
+        return self.config.get("client_id")
 
-    @api_secret.setter
-    def api_secret(self, value):
-        """Set the api_secret"""
-        self.config["api_secret"] = value
+    @client_id.setter
+    def client_id(self, value):
+        """Set the client_id"""
+        self.config["client_id"] = value
         self.refresh_token()
 
     @property

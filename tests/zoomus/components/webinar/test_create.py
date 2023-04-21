@@ -18,8 +18,10 @@ class CreateV1TestCase(unittest.TestCase):
         self.component = components.webinar.WebinarComponent(
             base_uri="http://foo.com",
             config={
-                "api_key": "KEY",
-                "api_secret": "SECRET",
+                "account_id": "KEY",
+                "client_id": "CLIENT_ID",
+                "client_secret": "CLIENT_SECRET",
+
                 "version": util.API_VERSION_1,
             },
         )
@@ -28,7 +30,7 @@ class CreateV1TestCase(unittest.TestCase):
     def test_can_create(self):
         responses.add(
             responses.POST,
-            "http://foo.com/webinar/create?host_id=ID&topic=TOPIC&api_key=KEY&api_secret=SECRET",
+            "http://foo.com/webinar/create?host_id=ID&topic=TOPIC&account_id=KEY&client_id=SECRET",
         )
         self.component.create(host_id="ID", topic="TOPIC")
 
@@ -45,7 +47,7 @@ class CreateV1TestCase(unittest.TestCase):
         responses.add(
             responses.POST,
             "http://foo.com/webinar/create?host_id=ID&topic=TOPIC&start_time=1969-01-01T01%3A01%3A00Z"
-            "&api_key=KEY&api_secret=SECRET",
+            "&account_id=KEY&client_id=SECRET",
         )
         start_time = datetime.datetime(1969, 1, 1, 1, 1)
         self.component.create(host_id="ID", topic="TOPIC", start_time=start_time)
@@ -56,8 +58,10 @@ class CreateV2TestCase(unittest.TestCase):
         self.component = components.webinar.WebinarComponentV2(
             base_uri="http://foo.com",
             config={
-                "api_key": "KEY",
-                "api_secret": "SECRET",
+                "account_id": "KEY",
+                "client_id": "CLIENT_ID",
+                "client_secret": "CLIENT_SECRET",
+
                 "version": util.API_VERSION_2,
             },
         )

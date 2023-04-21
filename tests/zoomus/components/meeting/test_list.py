@@ -18,8 +18,10 @@ class ListV1TestCase(unittest.TestCase):
         self.component = components.meeting.MeetingComponent(
             base_uri="http://foo.com",
             config={
-                "api_key": "KEY",
-                "api_secret": "SECRET",
+                "account_id": "KEY",
+                "client_id": "CLIENT_ID",
+                "client_secret": "CLIENT_SECRET",
+
                 "version": util.API_VERSION_1,
             },
         )
@@ -28,7 +30,7 @@ class ListV1TestCase(unittest.TestCase):
     def test_can_list(self):
         responses.add(
             responses.POST,
-            "http://foo.com/meeting/list?host_id=ID&api_key=KEY&api_secret=SECRET",
+            "http://foo.com/meeting/list?host_id=ID&account_id=KEY&client_id=SECRET",
         )
         self.component.list(host_id="ID")
 
@@ -41,7 +43,7 @@ class ListV1TestCase(unittest.TestCase):
         responses.add(
             responses.POST,
             "http://foo.com/meeting/list?host_id=ID&topic=TOPIC&type=TYPE&start_time=2020-01-01T01%3A01%3A00Z"
-            "&api_key=KEY&api_secret=SECRET",
+            "&account_id=KEY&client_id=SECRET",
         )
         start_time = datetime.datetime(2020, 1, 1, 1, 1)
         self.component.list(
@@ -54,8 +56,10 @@ class ListV2TestCase(unittest.TestCase):
         self.component = components.meeting.MeetingComponentV2(
             base_uri="http://foo.com",
             config={
-                "api_key": "KEY",
-                "api_secret": "SECRET",
+                "account_id": "KEY",
+                "client_id": "CLIENT_ID",
+                "client_secret": "CLIENT_SECRET",
+
                 "version": util.API_VERSION_2,
             },
         )

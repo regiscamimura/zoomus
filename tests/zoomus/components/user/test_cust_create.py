@@ -16,8 +16,10 @@ class CustCreateV1TestCase(unittest.TestCase):
         self.component = components.user.UserComponent(
             base_uri="http://foo.com",
             config={
-                "api_key": "KEY",
-                "api_secret": "SECRET",
+                "account_id": "KEY",
+                "client_id": "CLIENT_ID",
+                "client_secret": "CLIENT_SECRET",
+
                 "version": util.API_VERSION_1,
             },
         )
@@ -26,7 +28,7 @@ class CustCreateV1TestCase(unittest.TestCase):
     def test_can_create_by_email(self):
         responses.add(
             responses.POST,
-            "http://foo.com/user/custcreate?type=foo&email=a@b.com&api_key=KEY&api_secret=SECRET",
+            "http://foo.com/user/custcreate?type=foo&email=a@b.com&account_id=KEY&client_id=SECRET",
         )
         self.component.cust_create(type="foo", email="a@b.com")
 

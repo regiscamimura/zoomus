@@ -18,14 +18,15 @@ def suite():
 
 class ZoomClientTestCase(unittest.TestCase):
     def test_init_sets_config(self):
-        client = ZoomClient("KEY", "SECRET")
+        client = ZoomClient("ACCOUNT_ID", "CLIENT_ID", "CLIENT_SECRET")
         self.assertEqual(
             client.config,
             {
-                "api_key": "KEY",
-                "api_secret": "SECRET",
+                "account_id": "ACCOUNT_ID",
+                "client_id": "CLIENT_ID",
+                "client_secret": "CLIENT_SECRET",
                 "data_type": "json",
-                "token": util.generate_access_token("KEY", "SECRET"),
+                "token": util.generate_access_token("ACCOUNT_ID", "CLIENT_ID", "CLIENT_SECRET"),
                 "version": util.API_VERSION_2,
                 "base_uri": API_BASE_URIS[util.API_VERSION_2],
             },
@@ -33,21 +34,21 @@ class ZoomClientTestCase(unittest.TestCase):
 
     def test_invalid_api_version_raises_error(self):
         with self.assertRaisesRegexp(RuntimeError, "API version not supported: 42"):
-            ZoomClient("KEY", "SECRET", version=42)
+            ZoomClient("ACCOUNT_ID", "CLIENT_ID", "CLIENT_SECRET", version=42)
 
     def test_init_sets_config_with_timeout(self):
-        client = ZoomClient("KEY", "SECRET", timeout=500)
+        client = ZoomClient("ACCOUNT_ID", "CLIENT_ID", "CLIENT_SECRET", timeout=500)
         self.assertEqual(client.timeout, 500)
 
     def test_cannot_init_with_non_int_timeout(self):
         with self.assertRaises(ValueError) as context:
-            ZoomClient("KEY", "SECRET", timeout="bad")
+            ZoomClient("ACCOUNT_ID", "CLIENT_ID", "CLIENT_SECRET", timeout="bad")
             self.assertEqual(
                 context.exception.message, "timeout value must be an integer"
             )
 
     def test_init_creates_all_components(self):
-        client = ZoomClient("KEY", "SECRET")
+        client = ZoomClient("ACCOUNT_ID", "CLIENT_ID", "CLIENT_SECRET")
         self.assertEqual(
             set(
                 [
@@ -107,7 +108,7 @@ class ZoomClientTestCase(unittest.TestCase):
         )
 
     def test_api_version_defaults_to_2(self):
-        client = ZoomClient("KEY", "SECRET")
+        client = ZoomClient("ACCOUNT_ID", "CLIENT_ID", "CLIENT_SECRET")
         self.assertEqual(client.config["version"], util.API_VERSION_2)
         for key in client.components.keys():
             self.assertEqual(
@@ -115,7 +116,7 @@ class ZoomClientTestCase(unittest.TestCase):
             )
 
     def test_can_set_api_version_to_1(self):
-        client = ZoomClient("KEY", "SECRET", version=util.API_VERSION_1)
+        client = ZoomClient("ACCOUNT_ID", "CLIENT_ID", "CLIENT_SECRET", version=util.API_VERSION_1)
         self.assertEqual(client.config["version"], util.API_VERSION_1)
         for key in client.components.keys():
             self.assertEqual(
@@ -123,7 +124,7 @@ class ZoomClientTestCase(unittest.TestCase):
             )
 
     def test_can_set_base_uri_to_gdpr(self):
-        client = ZoomClient("KEY", "SECRET", base_uri=API_BASE_URIS[util.API_GDPR])
+        client = ZoomClient("ACCOUNT_ID", "CLIENT_ID", "CLIENT_SECRET", base_uri=API_BASE_URIS[util.API_GDPR])
         self.assertEqual(client.config["version"], util.API_VERSION_2)
         for key in client.components.keys():
             self.assertEqual(
@@ -132,93 +133,93 @@ class ZoomClientTestCase(unittest.TestCase):
 
     def test_can_set_custom_base_uri(self):
         client = ZoomClient(
-            "KEY", "SECRET", version=util.API_VERSION_1, base_uri="https://www.test.com"
+            "ACCOUNT_ID", "CLIENT_ID", "CLIENT_SECRET", version=util.API_VERSION_1, base_uri="https://www.test.com"
         )
         self.assertEqual(client.config["version"], util.API_VERSION_1)
         for key in client.components.keys():
             self.assertEqual(client.components[key].base_uri, "https://www.test.com")
 
     def test_can_set_api_version_to_1_and_set_custom_base_uri(self):
-        client = ZoomClient("KEY", "SECRET", base_uri=API_BASE_URIS[util.API_GDPR])
+        client = ZoomClient("ACCOUNT_ID", "CLIENT_ID", "CLIENT_SECRET", base_uri=API_BASE_URIS[util.API_GDPR])
         self.assertEqual(client.config["version"], util.API_VERSION_2)
         for key in client.components.keys():
             self.assertEqual(
                 client.components[key].base_uri, API_BASE_URIS[util.API_GDPR]
             )
 
-    def test_can_get_api_key(self):
-        client = ZoomClient("KEY", "SECRET")
-        self.assertEqual(client.api_key, "KEY")
+    def test_can_get_account_id(self):
+        client = ZoomClient("ACCOUNT_ID", "CLIENT_ID", "CLIENT_SECRET")
+        self.assertEqual(client.account_id, "ACCOUNT_ID")
 
-    def test_can_set_api_key(self):
-        client = ZoomClient("KEY", "SECRET")
-        client.api_key = "NEW-KEY"
-        self.assertEqual(client.api_key, "NEW-KEY")
+    def test_can_set_account_id(self):
+        client = ZoomClient("ACCOUNT_ID", "CLIENT_ID", "CLIENT_SECRET")
+        client.account_id = "NEW-ACCOUNT-ID"
+        self.assertEqual(client.account_id, "NEW-ACCOUNT-ID")
 
-    def test_can_get_api_secret(self):
-        client = ZoomClient("KEY", "SECRET")
-        self.assertEqual(client.api_secret, "SECRET")
+    def test_can_get_client_secret(self):
+        client = ZoomClient("ACCOUNT_ID", "CLIENT_ID", "CLIENT_SECRET")
+        self.assertEqual(client.client_secret, "SECRET")
 
-    def test_can_set_api_secret(self):
-        client = ZoomClient("KEY", "SECRET")
-        client.api_secret = "NEW-SECRET"
-        self.assertEqual(client.api_secret, "NEW-SECRET")
+    def test_can_set_client_secret(self):
+        client = ZoomClient("ACCOUNT_ID", "CLIENT_ID", "CLIENT_SECRET")
+        client.client_secret = "NEW-SECRET"
+        self.assertEqual(client.client_secret, "NEW-SECRET")
 
     def test_can_get_contacts_component(self):
-        client = ZoomClient("KEY", "SECRET")
+        client = ZoomClient("ACCOUNT_ID", "CLIENT_ID", "CLIENT_SECRET")
         self.assertIsInstance(client.contacts, components.contacts.ContactsComponentV2)
 
     def test_can_get_meeting_component(self):
-        client = ZoomClient("KEY", "SECRET")
+        client = ZoomClient("ACCOUNT_ID", "CLIENT_ID", "CLIENT_SECRET")
         self.assertIsInstance(client.meeting, components.meeting.MeetingComponentV2)
 
     def test_can_get_report_component(self):
-        client = ZoomClient("KEY", "SECRET")
+        client = ZoomClient("ACCOUNT_ID", "CLIENT_ID", "CLIENT_SECRET")
         self.assertIsInstance(client.report, components.report.ReportComponentV2)
 
     def test_can_get_user_component(self):
-        client = ZoomClient("KEY", "SECRET")
+        client = ZoomClient("ACCOUNT_ID", "CLIENT_ID", "CLIENT_SECRET")
         self.assertIsInstance(client.user, components.user.UserComponentV2)
 
     def test_can_get_webinar_component(self):
-        client = ZoomClient("KEY", "SECRET")
+        client = ZoomClient("ACCOUNT_ID", "CLIENT_ID", "CLIENT_SECRET")
         self.assertIsInstance(client.webinar, components.webinar.WebinarComponentV2)
 
     def test_can_get_recording_component(self):
-        client = ZoomClient("KEY", "SECRET")
+        client = ZoomClient("ACCOUNT_ID", "CLIENT_ID", "CLIENT_SECRET")
         self.assertIsInstance(
             client.recording, components.recording.RecordingComponentV2
         )
 
     def test_can_get_live_stream_component(self):
-        client = ZoomClient("KEY", "SECRET")
+        client = ZoomClient("ACCOUNT_ID", "CLIENT_ID", "CLIENT_SECRET")
         self.assertIsInstance(
             client.live_stream, components.live_stream.LiveStreamComponentV2
         )
 
     def test_can_get_phone_component(self):
-        client = ZoomClient("KEY", "SECRET")
+        client = ZoomClient("ACCOUNT_ID", "CLIENT_ID", "CLIENT_SECRET")
         self.assertIsInstance(client.phone, components.phone.PhoneComponentV2)
 
     def test_can_get_group_component(self):
-        client = ZoomClient("KEY", "SECRET")
+        client = ZoomClient("ACCOUNT_ID", "CLIENT_ID", "CLIENT_SECRET")
         self.assertIsInstance(client.group, components.group.GroupComponentV2)
 
     def test_can_get_room_component(self):
-        client = ZoomClient("KEY", "SECRET")
+        client = ZoomClient("ACCOUNT_ID", "CLIENT_ID", "CLIENT_SECRET")
         self.assertIsInstance(client.room, components.room.RoomComponentV2)
 
     def test_can_use_client_with_context(self):
-        with ZoomClient("KEY", "SECRET") as client:
+        with ZoomClient("ACCOUNT_ID", "CLIENT_ID", "CLIENT_SECRET") as client:
             self.assertIsInstance(client, ZoomClient)
 
     @mock.patch("zoomus.client.util.generate_access_token")
     def test_refresh_token_replaces_config_token_with_new_access_token(
         self, mock_access_token
     ):
-        client = ZoomClient("KEY", "SECRET")
+        client = ZoomClient("ACCOUNT_ID", "CLIENT_ID", "CLIENT_SECRET")
         client.refresh_token()
-        mock_access_token.assert_called_with("KEY", "SECRET")
+        mock_access_token.assert_called_with("ACCOUNT_ID", "CLIENT_ID", "CLIENT_SECRET")
         self.assertEqual(client.config["token"], (mock_access_token.return_value,))
 
 

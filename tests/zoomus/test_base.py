@@ -24,7 +24,7 @@ class BaseComponentTestCase(unittest.TestCase):
             },
         )
         responses.add(
-            responses.POST, "http://www.foo.com/foo?account_id=KEY&client_id=SECRET"
+            responses.POST, "http://www.foo.com/foo?account_id=KEY&client_secret=SECRET"
         )
         component.post_request("foo")
 
@@ -36,13 +36,12 @@ class BaseComponentTestCase(unittest.TestCase):
                 "account_id": "KEY",
                 "client_id": "CLIENT_ID",
                 "client_secret": "CLIENT_SECRET",
-
                 "version": util.API_VERSION_1,
             },
         )
         responses.add(
             responses.POST,
-            "http://www.foo.com/foo?foo=bar&account_id=KEY&client_id=SECRET",
+            "http://www.foo.com/foo?foo=bar&account_id=KEY&client_secret=SECRET",
         )
         component.post_request("foo", params={"foo": "bar"})
 
@@ -54,7 +53,6 @@ class BaseComponentTestCase(unittest.TestCase):
                 "account_id": "KEY",
                 "client_id": "CLIENT_ID",
                 "client_secret": "CLIENT_SECRET",
-
                 "version": util.API_VERSION_2,
                 "token": 42,
             },

@@ -17,8 +17,10 @@ class GetV1TestCase(unittest.TestCase):
         self.component = components.user.UserComponent(
             base_uri="http://foo.com",
             config={
-                "api_key": "KEY",
-                "api_secret": "SECRET",
+                "account_id": "KEY",
+                "client_id": "CLIENT_ID",
+                "client_secret": "CLIENT_SECRET",
+
                 "version": util.API_VERSION_1,
             },
         )
@@ -27,7 +29,7 @@ class GetV1TestCase(unittest.TestCase):
     def test_can_get(self):
         responses.add(
             responses.POST,
-            "http://foo.com/user/get?id=42&api_key=KEY&api_secret=SECRET",
+            "http://foo.com/user/get?id=42&account_id=KEY&client_id=SECRET",
         )
         self.component.get(id="42")
 
@@ -41,8 +43,10 @@ class GetV2TestCase(unittest.TestCase):
         self.component = components.user.UserComponentV2(
             base_uri="http://foo.com",
             config={
-                "api_key": "KEY",
-                "api_secret": "SECRET",
+                "account_id": "KEY",
+                "client_id": "CLIENT_ID",
+                "client_secret": "CLIENT_SECRET",
+
                 "version": util.API_VERSION_2,
             },
         )

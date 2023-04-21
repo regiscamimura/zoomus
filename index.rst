@@ -47,7 +47,7 @@ To install zoomus::
 **Usage**
 ---------
 
-Initialize client with ACCOUNT_ID, CLIENT_ID, and CLIENT_SECRET
+Initialize client with ACCOUNT_ID, CLIENT_SECRET, and CLIENT_SECRET
 *********************************************
 
 As Zoom's default is now the V2 API, the client will default to the V2 version of the API

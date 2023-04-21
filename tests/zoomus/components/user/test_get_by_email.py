@@ -16,8 +16,10 @@ class GetByEmailV1TestCase(unittest.TestCase):
         self.component = components.user.UserComponent(
             base_uri="http://foo.com",
             config={
-                "api_key": "KEY",
-                "api_secret": "SECRET",
+                "account_id": "KEY",
+                "client_id": "CLIENT_ID",
+                "client_secret": "CLIENT_SECRET",
+
                 "version": util.API_VERSION_1,
             },
         )
@@ -26,7 +28,7 @@ class GetByEmailV1TestCase(unittest.TestCase):
     def test_can_get_by_email(self):
         responses.add(
             responses.POST,
-            "http://foo.com/user/getbyemail?email=a@b.com&login_type=foo&api_key=KEY&api_secret=SECRET",
+            "http://foo.com/user/getbyemail?email=a@b.com&login_type=foo&account_id=KEY&client_id=SECRET",
         )
         self.component.get_by_email(email="a@b.com", login_type="foo")
 
